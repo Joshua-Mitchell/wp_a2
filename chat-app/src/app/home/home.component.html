@@ -1,0 +1,95 @@
+
+<!-- Nav Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <!-- Branding on left side-->
+  <a class="navbar-brand" routerLink="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Main Nav panel -->
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()" routerLink="login">Sign Out</a>
+      </li>
+    </ul>
+    
+    <!-- Welcome note on right side -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        Welcome <strong>{{ user.username }}</strong>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Main Body -->
+<div class="container h-100" style="max-width: 1920px; padding: 0px; margin-left: auto; margin-right: auto">
+  <div class="row" style="width: 100%">
+      <!-- Groups -->
+      <div class="col-lg-2" style="padding:0px">
+
+        <!-- Groups Section -->
+        <div class="card mb-3">
+          <h3 class="card-header">Groups</h3>
+          <div class="card-body" style="height: 500px; overflow-y:hidden">
+
+            <!-- New Group Form -->
+            <div class="form-inline" >
+              <form (submit)="createGroup($event)">
+                <input class="form-control" name="newGroupName" style="width:calc(100% - 100px)" placeholder="New Group" type="text" [(ngModel)]="newGroupName">
+                <button class="btn btn-primary" style="width:100px">Create</button>
+              </form>
+            </div>
+
+            <!-- List of Groups -->
+            <div class="row" *ngFor="let group of groups">
+                <button type="button" *ngIf="group.role == 0" (click)="openGroup(group.name)" class="btn btn-outline-success col-lg-12">{{ group.name }}</button>
+                <button type="button" *ngIf="group.role >= 1" (click)="openGroup(group.name)" class="btn btn-outline-primary col-lg-10">{{ group.name }}</button>
+                <button type="button" class="btn btn-danger col-lg-2" (click)="deleteGroup(group.name)" *ngIf="group.role >= 1">-</button>
+            </div>
+          </div>
+        </div>        
+      </div>
+
+      <!-- Channels Column -->
+      <div class="col-lg-2" style="padding:0px">
+        <div class="card mb-3">
+          <h3 class="card-header">Channels</h3>
+          <div class="card-body" style="height: 500px; overflow-y:hidden">
+
+            <!-- New Channel Form -->
+            <div class="form-inline" >
+              <form (submit)="createChannel($event)">
+              <input class="form-control" name="newGroupName" style="width:calc(100% - 100px)" placeholder="New Channel" type="text" [(ngModel)]="newGroupName">
+              <button class="btn btn-primary" style="width:100px">Create</button>
+              </form>
+            </div>
+
+            <!-- List of Channels -->
+            <app-channels [channels]=channels [group]=selectedGroup (channelChanged)="channelChangedHandler($event)"></app-channels>
+          </div>
+        </div> 
+      </div>
+
+
+      <!-- Chat Column -->
+      <div class="col-lg-6" style="padding:0px">
+        <app-chat [channel]=selectedChannel></app-chat>
+      </div>
+
+      <!-- Members Column -->
+      <div class="col-lg-2" style="padding:0px">
+        <h3 style="text-align:center; width:100%">Users</h3>
+        <ng-container *ngIf="selectedChannel != null" >
+            <p *ngFor="let member of selectedChannel.members">
+              {{ member }}
+            </p>
+        </ng-container>
+      </div>
+    </div>
+</div>

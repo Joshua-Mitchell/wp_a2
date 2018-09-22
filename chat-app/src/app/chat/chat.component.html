@@ -1,0 +1,22 @@
+
+<div class="card mb-3">
+  <h3 *ngIf="channel != null" class="card-header">{{channel.name}}</h3>
+  <h3 *ngIf="channel == null" class="card-header">Chat</h3>
+  <div class="card-body" style="height: 500px; overflow-y:scroll">
+    <p class="card-text">
+      ryoma: message
+    </p>
+    <p class="card-text">
+      member1: message
+    </p>
+    <p class="card-text">
+      member2: message
+    </p>
+  </div>
+  <div class="card-footer text-muted">
+    <div class="form-inline">
+        <input class="form-control" style="width:calc(100% - 100px)">
+        <button class="btn btn-primary" style="width:100px">enter</button>
+    </div>
+  </div>
+</div>

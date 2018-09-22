@@ -1,0 +1,35 @@
+<div class="row h-100">
+<div class="col-lg-3">
+  <br>
+
+</div>
+<div class="col-lg-6 align-self-center">
+  <div class="card border-primary mb-3" style="width: 100%">
+    <div class="card-header">Login</div>
+    <div class="card-body">
+      <h4 class="card-title">Please sign in to chat</h4>
+      <form (submit)="loginUser($event)">
+        <fieldset>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input [(ngModel)]="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter username" name="username">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input [(ngModel)]="password" type="password" class="form-control" id="password" placeholder="Password" name="password">
+          </div>
+          <div id="error">
+            
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+</div>
+<div class="col-lg-3">
+  <br>
+</div>
+</div>
