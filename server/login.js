@@ -6,10 +6,17 @@
 module.exports = function(){
     this.data;
 
-    this.findUser = function(username, password){
+    this.findUser = function(username, password, MongoClient, dbName){
+
+        this.MongoClient.connect(this.dbName, function(err, db) {
+            const assert = require('assert');
+            let dbo = db.db('chat');
+        });
+
         console.log("Password: ", password);
         let match = false;
         let users = data.users;
+
         for(let i = 0; i < users.length; i++) {
             if(users[i].username === username && users[i].password === password) {
                 match = users[i];

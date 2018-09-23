@@ -31,7 +31,7 @@ MongoClient.connect(url, function(err, client) {
         console.log(err)
     }
     console.log("Connected successfully to server");
-
+    
     const db = client.db(dbName);
 });
 
@@ -62,7 +62,7 @@ app.post('/api/login', function(req, res){
         login.data = data;
 
         // check the json file to see if the username exists
-        let match = login.findUser(username, password);
+        let match = login.findUser(username, password, MongoClient);
 
     
         // Check to see if we have a match, get groups if true
