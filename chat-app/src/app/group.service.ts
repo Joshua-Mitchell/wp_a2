@@ -1,5 +1,5 @@
 // ============================================
-// This service is responsible for CRUD actions 
+// This service is responsible for CRUD actions
 // to the group APIs
 // ============================================
 
@@ -17,19 +17,29 @@ const httpOptions = {
 export class GroupService {
   private api:string = 'http://localhost:3000/api/';
 
-  constructor(private http:HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  createGroup(data){
+  createGroup(data) {
     let body = JSON.stringify(data);
     return this.http.post(this.api + 'group/create', body, httpOptions);
   }
 
-  deleteGroup(groupName, username){
+  deleteGroup(groupName, username) {
     return this.http.delete(this.api + 'group/delete/' + groupName);
   }
-  getGroups(data){
+  getGroups(data) {
     let body = JSON.stringify(data);
     return this.http.post(this.api + 'groups', body, httpOptions);
+  }
+
+  createChannel(data) {
+    let body = JSON.stringify(data);
+    return this.http.post(this.api + 'channel/create', body, httpOptions);
+  }
+
+  getChannels(data) {
+    let body = JSON.stringify(data);
+    return this.http.post(this.api + 'channels', body, httpOptions);
   }
 
 }

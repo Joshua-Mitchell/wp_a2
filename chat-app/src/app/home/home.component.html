@@ -17,7 +17,7 @@
         <a class="nav-link" (click)="logout()" routerLink="login">Sign Out</a>
       </li>
     </ul>
-    
+
     <!-- Welcome note on right side -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -53,7 +53,7 @@
                 <button type="button" class="btn btn-danger col-lg-2" (click)="deleteGroup(group.name)" *ngIf="group.role >= 1">-</button>
             </div>
           </div>
-        </div>        
+        </div>
       </div>
 
       <!-- Channels Column -->
@@ -65,7 +65,7 @@
             <!-- New Channel Form -->
             <div class="form-inline" >
               <form (submit)="createChannel($event)">
-              <input class="form-control" name="newGroupName" style="width:calc(100% - 100px)" placeholder="New Channel" type="text" [(ngModel)]="newGroupName">
+              <input class="form-control" name="newChannelName" style="width:calc(100% - 100px)" placeholder="New Channel" type="text" [(ngModel)]="newChannelName">
               <button class="btn btn-primary" style="width:100px">Create</button>
               </form>
             </div>
@@ -73,7 +73,7 @@
             <!-- List of Channels -->
             <app-channels [channels]=channels [group]=selectedGroup (channelChanged)="channelChangedHandler($event)"></app-channels>
           </div>
-        </div> 
+        </div>
       </div>
 
 

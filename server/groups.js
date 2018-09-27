@@ -87,7 +87,7 @@ module.exports = function(){
             }
         }
 
-
+        console.log("Channels", channels);
         return channels;
     };
     return this;

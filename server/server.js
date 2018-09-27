@@ -33,6 +33,40 @@ MongoClient.connect(url, function(err, client) {
     console.log("Connected successfully to server");
     
     const db = client.db(dbName);
+    let usersInit = [
+        {username:"Josh", permissions:2, password:"123"},
+        {username:"super", permissions:2, password:"123"},
+        {username:"group", permission:1, password:"123"}
+    ]
+
+    db.createCollection("users", function(err, res) {
+        if (err) {
+            console.log("Error on creating users collection");
+        }
+        console.log("Sucessfully created collection users");
+
+    });
+    db.createCollection("groups", function(err, res) {
+        if (err) {
+            console.log("Error on creating group collection");
+
+        }
+        console.log("Sucessfully create groups collection");
+    });
+    db.createCollection("channels", function(err, res) {
+        if (err) {
+            console.log("Error on creating channels collection");
+        }
+        console.log("Sucessfully created collection channels"); 
+    });
+
+    db.collection("user").insertMany(usersInit, function(err, res){
+        if (err) throw err;
+        console.log("Inserted " + res.insertedCount + " documents to students");
+    });
+
+    //db.close();
+
 });
 
 // Body-Parser
@@ -53,9 +87,24 @@ app.get('/home', function(req,res){
 const login = require('./login.js')();
 const groups = require('./groups.js')();
 
+// app.get('/db/install', function(req, client){
+//     MongoClient.connect(url, function(err, db) {
+//         if (err) throw err;
+//         console.log("Connected to db");
+//         let db = client.db("chat");
+//     })
+// });
+
 app.post('/api/login', function(req, res){
     // read in the users data json object to get the username
-    fs.readFile(dataFile, dataFormat, function(err, data){
+    // MongoClient.connect(url, function(err, client) {
+    //     if (err) {
+    //         console.log(err);
+    //     }
+    //     const db = client.db(dbName);
+    //     const collection
+    // });
+    fs.readFile(dataFile, dataFormat, function(err, data) {
         data = JSON.parse(data);
         let username = req.body.username;
         let password = req.body.password;
@@ -142,6 +191,59 @@ app.post('/api/group/create', function(req, res){
         });
     }
 });
+
+app.post('/api/channel/create', function(req, res){
+    let channelName = req.body.newChannelName;
+    let selectedGroup = req.body.selectedGroup;
+    let member = req.body.member;
+    if(channelName === '' || channelName === 'undefined' || channelName == null){
+        res.send(false);
+    } else {
+        // Read the JSON file to get an updated list of groups
+        fs.readFile(dataFile, dataFormat, function(err, data){
+            let readData = JSON.parse(data);
+            let c = readData.channels;
+    
+            let newChannel = {
+                'name': req.body.newChannelName,
+                'group': selectedGroup,
+                'members':[member]
+            };
+            console.log(newChannel);
+            c.push(newChannel);
+            readData.channels = c;
+            let json = JSON.stringify(readData);
+            
+            // Write the updated data to the JSON file.
+            fs.writeFile(dataFile, json, dataFormat, function(err, data){
+                res.send(true);
+                console.log("Created new channel: " + req.body.newChannelName);
+            });
+        });
+    }
+});
+
+app.post('/api/channels', function(req,res){
+    // We want to authenticate again -- usually you'd use a token
+    fs.readFile(dataFile, dataFormat, function(err, data){
+        data = JSON.parse(data);
+        let username = req.body.username; 
+        let group = req.body.group;
+        login.data = data;
+        let match = login.findUser(username);
+        console.log("Username:" + username);
+        console.log("Match:" + match);
+        
+        // Check to see if we got a match, get groups if true
+        if(match !== false){
+            groups.data = data;
+            match.groups = groups.getChannels(username, group, match.permissions);
+        }
+        res.send(match);
+    });
+});
+
+
  
 
 
