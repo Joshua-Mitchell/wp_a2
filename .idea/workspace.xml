@@ -2,6 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1adc75c3-33a6-4973-b57a-027283a34f4b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/src/app/channels/channels.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/src/app/channels/channels.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/src/app/group.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/src/app/group.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/src/app/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/src/app/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/src/app/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/src/app/home/home.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/src/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/groups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Week 7 - Mongo/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week 7 - Mongo/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Week 7 - Mongo/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week 7 - Mongo/package.json" afterDir="false" />
     </list>
@@ -60,14 +72,40 @@
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
     </session>
+    <session id="415790452">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="js" value="497" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JavaScript" value="497" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts">
+        <counts>
+          <entry key="Angular2LanguageService" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages" />
+      <usages-collector id="statistics.file.types.open" />
+      <usages-collector id="statistics.file.extensions.open" />
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+            <state relative-caret-position="271">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -75,11 +113,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/groups.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="50" lean-forward="true" selection-start-line="13" selection-start-column="50" selection-end-line="13" selection-end-column="50" />
+            <state relative-caret-position="-783">
+              <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -91,16 +129,16 @@
         <entry file="file://$PROJECT_DIR$/server/data.json">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="701" selection-start-column="701" selection-end-column="701" />
+              <caret column="76" selection-start-column="76" selection-end-column="76" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="58" column="32" lean-forward="true" selection-start-line="58" selection-start-column="32" selection-end-line="58" selection-end-column="32" />
+            <state relative-caret-position="220">
+              <caret line="168" column="7" lean-forward="true" selection-start-line="168" selection-start-column="7" selection-end-line="168" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -146,9 +184,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
               <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-              <folding>
-                <element signature="e#167#210#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -168,7 +203,7 @@
     </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -211,81 +246,31 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="2811ict_assignment_1-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2811ict_assignment_1-master" type="462c0819:PsiDirectoryNode" />
+              <item name="assignment2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="assignment2" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="2811ict_assignment_1-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2811ict_assignment_1-master" type="462c0819:PsiDirectoryNode" />
-              <item name="chat-app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2811ict_assignment_1-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2811ict_assignment_1-master" type="462c0819:PsiDirectoryNode" />
-              <item name="chat-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2811ict_assignment_1-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2811ict_assignment_1-master" type="462c0819:PsiDirectoryNode" />
-              <item name="chat-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2811ict_assignment_1-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2811ict_assignment_1-master" type="462c0819:PsiDirectoryNode" />
-              <item name="chat-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="channels" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2811ict_assignment_1-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2811ict_assignment_1-master" type="462c0819:PsiDirectoryNode" />
-              <item name="chat-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="chat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2811ict_assignment_1-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2811ict_assignment_1-master" type="462c0819:PsiDirectoryNode" />
-              <item name="chat-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="home" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2811ict_assignment_1-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2811ict_assignment_1-master" type="462c0819:PsiDirectoryNode" />
-              <item name="chat-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2811ict_assignment_1-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2811ict_assignment_1-master" type="462c0819:PsiDirectoryNode" />
+              <item name="assignment2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="assignment2" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/server.js" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="ts.external.directory.path" value="C:\Users\Joshua Mitchell\Documents\Web Prgramming Workshops\Assignments\2811ict_assignment_1-master\chat-app\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\Joshua Mitchell\Documents\Web Prgramming Workshops\Assignments\assignment2\chat-app\node_modules\typescript\lib" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -299,6 +284,11 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="NodeJSConfigurationType" factoryName="Node.js" path-to-js-file="server/server.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -311,11 +301,12 @@
       <updated>1537167003578</updated>
       <workItem from="1537167007585" duration="12981000" />
       <workItem from="1537340824528" duration="6165000" />
+      <workItem from="1538019124974" duration="7157000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19146000" />
+    <option name="totallyTimeSpent" value="26303000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
@@ -331,8 +322,8 @@
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="TypeScript" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
-      <window_info anchor="bottom" id="Run" order="7" />
-      <window_info anchor="bottom" id="Debug" order="8" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.32897863" />
+      <window_info active="true" anchor="bottom" id="Debug" order="8" visible="true" weight="0.39904988" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -365,44 +356,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/data.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="701" selection-start-column="701" selection-end-column="701" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chat-app/src/app/chat/chat.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chat-app/src/app/login/login.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chat-app/src/app/group.service.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-          <folding>
-            <element signature="e#167#210#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -413,6 +370,13 @@
           <folding>
             <element signature="e#0#50#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chat-app/src/app/chat/chat.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -430,20 +394,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/server.js">
+    <entry file="file://$PROJECT_DIR$/chat-app/src/app/login/login.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="58" column="32" lean-forward="true" selection-start-line="58" selection-start-column="32" selection-end-line="58" selection-end-column="32" />
+        <state relative-caret-position="527">
+          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/groups.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="50" lean-forward="true" selection-start-line="13" selection-start-column="50" selection-end-line="13" selection-end-column="50" />
+        <state relative-caret-position="-783">
+          <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="76" selection-start-column="76" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="168" column="7" lean-forward="true" selection-start-line="168" selection-start-column="7" selection-end-line="168" selection-end-column="7" />
         </state>
       </provider>
     </entry>

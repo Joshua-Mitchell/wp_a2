@@ -10,14 +10,14 @@ import { $ } from 'protractor';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public username:string;
-  private password:string;
+  public username: string;
+  private password: string;
 
-  constructor(private router:Router, private form:FormsModule, private _userService:UserService) {
+  constructor(private router: Router, private form: FormsModule, private _userService:UserService) {
   }
 
   ngOnInit() {
-    if(sessionStorage.getItem('user') !== null){
+    if(sessionStorage.getItem('user') !== null) {
       this.router.navigate(['/home']);
     }
   }
@@ -29,16 +29,16 @@ export class LoginComponent implements OnInit {
       username: this.username,
       password: this.password
     };
-    
+
     this._userService.login(user).subscribe(
-      data => { 
+      data => {
         console.log(data);
-        if(data != false){
+        if (data != false) {
           let temp = JSON.stringify(data);
-          sessionStorage.setItem('user', temp);         
-          this.router.navigate(['/home']); 
+          sessionStorage.setItem('user', temp);
+          this.router.navigate(['/home']);
         } else {
-          let message = "Your username and password did not match."
+          let message = "Your username and password did not match.";
           document.getElementById('error').innerHTML = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Oh snap!</strong> '+ message +'</div>';
         }
       },

@@ -27,6 +27,7 @@ export class GroupService {
   deleteGroup(groupName, username) {
     return this.http.delete(this.api + 'group/delete/' + groupName);
   }
+  
   getGroups(data) {
     let body = JSON.stringify(data);
     return this.http.post(this.api + 'groups', body, httpOptions);

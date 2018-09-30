@@ -13,13 +13,13 @@ export class HomeComponent implements OnInit {
   public selectedChannel;
   public groups = [];
   public channels = [];
-  public newGroupName:String
-  public newChannelName:String;
+  public newGroupName: String;
+  public newChannelName: String;
 
   constructor(private router: Router, private _groupService: GroupService) { }
 
   ngOnInit() {
-    if(sessionStorage.getItem('user') === null) {
+    if (sessionStorage.getItem('user') === null) {
       // User has not logged in, reroute to login
       this.router.navigate(['/login']);
     } else {
@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
       this.user = user;
       console.log(this.user);
       this.groups = user.groups;
+      console.log("group objects received" + user.groups);
       if (this.groups.length > 0) {
         this.openGroup(this.groups[0].name);
         if (this.groups[0].channels > 0) {
@@ -38,8 +39,12 @@ export class HomeComponent implements OnInit {
 
   createChannel(event) {
     event.preventDefault();
-    let data = {'newChannelName': this.newChannelName, 'selectedGroup': this.selectedGroup.name,
-    'member': JSON.parse(sessionStorage.getItem('user')).username};
+
+    let data = {
+      'newChannelName': this.newChannelName,
+      'selectedGroup': this.selectedGroup.name,
+      'member': JSON.parse(sessionStorage.getItem('user')).username
+    };
 
     this._groupService.createChannel(data).subscribe(
       data => {
@@ -52,7 +57,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  createGroup(event){
+  createGroup(event) {
     event.preventDefault();
     let data = {'newGroupName': this.newGroupName};
     this._groupService.createGroup(data).subscribe(
@@ -68,9 +73,9 @@ export class HomeComponent implements OnInit {
 
   deleteGroup(groupName) {
     this._groupService.deleteGroup(groupName, this.user.username).subscribe(
-      data=>{
+      data => {
         this.getGroups();
-      }, error =>{
+      }, error => {
         console.error(error);
       }
     );
@@ -113,6 +118,7 @@ export class HomeComponent implements OnInit {
   // Responsible for handling the event call by the child component
   channelChangedHandler(name) {
     let found: boolean = false;
+    console.log('Entered channelChangedHandler');
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].name === name) {
         this.selectedChannel = this.channels[i];

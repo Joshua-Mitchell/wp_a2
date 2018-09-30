@@ -20,6 +20,25 @@ module.exports = function(){
         }
         return found;
     };
+    this.GetGroups = function(username, res, db) {
+        //let groups = [];
+        let query = {};
+        console.log("user " + username);
+        // groups = db.collection("groups").find({}).toArray();
+        // console.log(groups);
+        // console.log("groups count: " + db.collection("groups").find({}).count())
+        // db.collection("groups").findOne({"name": {$in : ["2811ICT"]}}, function(err, member){
+        //     if(err) throw err;
+        //     console.log("member: " + member);
+        // });
+        db.collection("groups").find({"members":{$in: ["ryoma"]}}).toArray(function(err, groups){
+            console.log("groups: " + JSON.stringify(groups));
+            //res.send(groups);
+            
+            return groups;
+        });
+
+    }
 
     // Return all groups where the username exists (or according to role)
     this.getGroups = function(username, role = 0){
