@@ -34,10 +34,6 @@ MongoClient.connect(url, function(err, client) {
     }
     console.log("Connected successfully to server");
 
-    
-    
-    
-    
     const db = client.db(dbName);
     let usersInit = [
         // users:[
@@ -71,17 +67,31 @@ MongoClient.connect(url, function(err, client) {
         password : "123",
         adminOf: [
             {group: "1701", role:0, channels: [
-                {channel: "Lab"},
-                {channel: "Lab2"},
-                {channel: "lab3"}
+                {channel: "Lab", messages:[
+                    "super : hello", 'super: hello again'
+                ]},
+                {channel: "Lab2", messages:[
+                    "super : hello", 'super: hello there'
+                ]},
+                {channel: "lab3", messages:[
+                    
+                ]}
             ]},
             {group: "1803", role:1, channels: [
-                {channel: "Lab1"},
-                {channel: "Lab2"}
+                {channel: "Lab1", messages:[
+                    "super : hello group 1803", 'super: hello again'
+                ]},
+                {channel: "Lab2", messages:[
+                    
+                ]}
             ]},
             {group: "1801", role:1, channels: [
-                {channel: "Lab1"},
-                {channel: "Lab"}
+                {channel: "Lab1", messages:[
+                    
+                ]},
+                {channel: "Lab", messages:[
+                    
+                ]}
             ]}
         ],
         memberOf: [
@@ -95,9 +105,21 @@ MongoClient.connect(url, function(err, client) {
         username: "josh",
         password: "123",
         adminOf : [
-            {group: "1801", role: 1, channels: [
-                {channel: "Lab1"},
-                {channel: "Lab2"}
+            {group: "1801", role: 0, channels: [
+                {channel: "Lab1", messages:[
+                    
+                ]},
+                {channel: "Lab2",  messages:[
+                    
+                ]}
+            ]},
+            {group: "1809", role: 1, channels: [
+                {channel: "Lab1", messages:[
+                    
+                ]},
+                {channel: "Lab2",  messages:[
+                    
+                ]}
             ]}
         ],
         memberOf : [
@@ -197,13 +219,6 @@ app.get('/home', function(req,res){
 const login = require('./login.js')();
 const groups = require('./groups.js')();
 
-// app.get('/db/install', function(req, client){
-//     MongoClient.connect(url, function(err, db) {
-//         if (err) throw err;
-//         console.log("Connected to db");
-//         let db = client.db("chat");
-//     })
-// });
 
 app.post('/api/login', function(req, res){
     // read in the users data json object to get the username
@@ -227,15 +242,6 @@ app.post('/api/login', function(req, res){
             } else{
                 if(data.password === req.body.password){
                     obj.success = true;
-
-                    //obj.groups = 
-                    // db.collection("users").find({"adminOf" : {$all : []}}).toArray(function(err, groupsData){
-                    //     if (err) throw err;
-                    //     console.log("groups1: " + groupsData);
-                    // });
-
-                    //console.log();
-                    //getGroups(username, res, dbo)
                     console.log("User : "+ data._id + 'logged in.');
 
                     
@@ -296,73 +302,79 @@ app.delete('/api/group/delete/:groupname/:id', function(req, res){
         if (err) throw err;
         let db = client.db(dbName);
         let ObjectID = require('mongodb').ObjectID;
-        db.collection("users").findOne({"_id" : req.params.id}, function(err, data) { 
+
+        // Find the user in the collection
+    
+
+        // delete the group from the users array by updating the adminOf array of groups
+        db.collection("users").updateOne({"_id" : req.params.id}, {$pull : {"adminOf" : {"group" : groupName}}}, function(err, groupDelete) {
             if (err) throw err;
-            if (data === null) {
-                console.log("\nCould find user to delete group\n");
-            } else {
-                db.collection("users").updateOne({"_id" : req.params.id}, {$pull : {"adminOf" : {"group" : groupName}}}, function(err, groupDelete) {
+            
+            // Check if the group was successfully removed
+            if (groupDelete.result.nModified === 1) {
+                db.collection("users").findOne({"_id" : req.params.id}, function(err, data) { 
                     if (err) throw err;
-                    
-                    if (groupDelete.result.nModified === 1) {
-                        res.send(data);
-                    } else {
-                        res.send(false);
-                    }
-                    console.log("Getting group data after delete\n");
-                    console.log(groupDelete.result);
+                    res.send(data);
+                    //client.close();
                 });
-                    
+            } else {
+                res.send(false);
+                //client.close()
             }
-            console.log("User found\n");
-            console.log(data); 
-            client.close();
         });
 
+
+
+                    
+            //client.close();
+
     });
-
-    // Read the JSON file to get the current data
-    // fs.readFile(dataFile, dataFormat, function(err, data){
-    //     let readData = JSON.parse(data);
-    //     groups.data = readData.groups;
-    //     readData.groups = groups.deleteGroup(groupName);
-    //     console.log(readData);
-    //     let json = JSON.stringify(readData);
-
-    //     // Write the updated data to JSON
-    //     fs.writeFile(dataFile, json, dataFormat, function(err, d){
-    //         res.send(true);
-    //         console.log("Deleted group: " + groupName);
-    //     });
-    // });
 });
 
 app.post('/api/group/create', function(req, res){
-    let groupName = req.body.newGroupName;
-    if(groupName === '' || groupName === 'undefined' || groupName == null){
-        res.send(false);
-    } else {
-        // Read the JSON file to get an updated list of groups
-        fs.readFile(dataFile, dataFormat, function(err, data){
-            let readData = JSON.parse(data);
-            let g = readData.groups;
-    
+    // id, newGroupName, 
+
+    MongoClient.connect(url, function(err, client) {
+        if (err) throw err;
+        let db = client.db(dbName);
+        console.log('new group name: ' + req.body.newGroupName);
+        let groupName = req.body.newGroupName;
+        if(groupName === '' || groupName === 'undefined' || groupName == null){
+            console.log('group name was not provided\n');
+            res.send(false);
+        } else {
+
             let newGroup = {
-                'name': req.body.newGroupName,
-                'admins':[],
-                'members':[]
+                'group': req.body.newGroupName,
+                'role': 1,
+                'channels':[]
             };
-            g.push(newGroup);
-            readData.groups = g;
-            let json = JSON.stringify(readData);
-            
-            // Write the updated data to the JSON file.
-            fs.writeFile(dataFile, json, dataFormat, function(err, data){
-                res.send(true);
-                console.log("Created new group: " + req.body.newGroupName);
+            // Add the new group to the user list of groups
+            db.collection('users').updateOne({"_id" : req.body._id}, {$addToSet : {"adminOf" : newGroup}}, function(err, result) {
+                if (err) throw err;
+                console.log(result.result);
+
+                // Check if the group was successfully added
+                if (result.result.nModified === 1) {
+
+                    // get the user to return and update the user stored in the front end
+                    db.collection('users').findOne({"_id" : req.body._id}, function(err, data) { 
+                        if (err) throw err;
+                        console.log('User after group added\n');
+                        console.log(data);
+                        res.send(data);
+                        client.close();
+                    });
+                } else {
+                    res.send(false);
+                    client.close();
+                }
+                
             });
-        });
-    }
+            
+        }
+        
+    });
 });
 
 app.post('/api/channel/create', function(req, res){

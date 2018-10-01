@@ -34,12 +34,9 @@ export class HomeComponent implements OnInit {
       if (this.groups.length > 0) {
         // open the first group and display it's channels
         this.openGroup(this.groups[0].group);
-        console.log('first channel \n');
-        console.log(this.groups[0].channels[0].channel);
-        console.log('channels length ' + this.groups[0].channels.length);
+
         if (this.groups[0].channels.length > 0) {
-          console.log('first channel \n');
-          console.log(this.groups[0].channels[0].channel);
+          console.log("set intial channels list to first group's\n");
           this.channelChangedHandler(this.groups[0].channels[0].channel);
         }
       }
@@ -68,11 +65,30 @@ export class HomeComponent implements OnInit {
 
   createGroup(event) {
     event.preventDefault();
-    let data = {'newGroupName': this.newGroupName};
+    let data = {'newGroupName': this.newGroupName, '_id' : this.user._id};
     this._groupService.createGroup(data).subscribe(
       data => {
-        console.log(data);
-        this.getGroups();
+        if (data !== false) {
+
+          let temp = JSON.stringify(data);
+          sessionStorage.setItem('user', temp);
+          this.user = data;
+          console.log(data);
+
+          this.groups = data.adminOf;
+          if (this.groups.length > 0) {
+            console.log(this.groups);
+            this.selectedGroup = this.groups[0];
+            this.channels = this.selectedGroup.channels;
+          } else {
+            console.log('there are no groups remaining\n');
+          }
+
+
+        } else {
+          console.log('group ' + this.newGroupName + 'was not created :(\n');
+        }
+
       },
       error => {
         console.error(error);
@@ -88,19 +104,29 @@ export class HomeComponent implements OnInit {
           let temp = JSON.stringify(data);
           sessionStorage.setItem('user', temp);
           this.user = data;
+          console.log(data);
+
           this.groups = data.adminOf;
           if (this.groups.length > 0) {
-            // open the first group and display it's channels
-            this.openGroup(this.groups[0].group);
-            console.log('first channel \n');
-            console.log(this.groups[0].channels[0].channel);
-            console.log('channels length ' + this.groups[0].channels.length);
-            if (this.groups[0].channels.length > 0) {
-              console.log('first channel \n');
-              console.log(this.groups[0].channels[0].channel);
-              this.channelChangedHandler(this.groups[0].channels[0].channel);
-            }
+            console.log(this.groups);
+            this.selectedGroup = this.groups[0];
+            this.channels = this.selectedGroup.channels;
+          } else {
+            console.log('there are no groups remaining\n');
           }
+
+          // if (this.groups.length > 0) {
+          //   // open the first group and display it's channels
+          //   this.openGroup(this.groups[0].group);
+          //   console.log('first channel \n');
+          //   console.log(this.groups[0].channels[0].channel);
+          //   console.log('channels length ' + this.groups[0].channels.length);
+          //   if (this.groups[0].channels.length > 0) {
+          //     console.log('first channel \n');
+          //     console.log(this.groups[0].channels[0].channel);
+          //     this.channelChangedHandler(this.groups[0].channels[0].channel);
+          //   }
+          // }
           //this.getGroups();
         } else {
           console.log('group was not deleted\n');
@@ -172,6 +198,10 @@ export class HomeComponent implements OnInit {
       }
     }
     return found;
+  }
+
+  deleteChannelHandler(name) {
+    console.log('channel selected to delete: ' + name);
   }
 
   getChannels(groupName) {

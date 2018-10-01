@@ -1,5 +1,5 @@
 // ============================================
-// This service is responsible for CRUD actions 
+// This service is responsible for CRUD actions
 // to the user APIs
 // ============================================
 
@@ -29,6 +29,6 @@ export class UserService {
   }
 
   delete(username){
-    return this.http.delete(this.api + 'user/delete/'+username);
+    return this.http.delete(this.api + 'user/delete/' + username);
   }
 }

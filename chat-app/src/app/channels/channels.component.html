@@ -1,8 +1,9 @@
 <div style="width: 100%">
   <p *ngIf="channels.length == 0" style="width: 100%;text-align:center">No channels available</p>
   <div class="row-centered" *ngFor="let channel of channels">
-    <button *ngIf="group.role == 0" type="button" (click)="changeChannel(channel.channel)"  class="btn btn-outline-primary col-lg-10">{{ channel.channel }}</button>
-    <button *ngIf="group.role >= 1" type="button" (click)="changeChannel(channel.channel)"  class="btn btn-outline-primary col-lg-8">{{ channel.channel }}</button>
+
+    <button *ngIf="group.role == 0" type="button" (click)="changeChannel(channel.channel)"  class="btn btn-outline-success col-lg-12">{{ channel.channel }}</button>
+    <button *ngIf="group.role >= 1" type="button" (click)="changeChannel(channel.channel)"  class="btn btn-outline-primary col-lg-10">{{ channel.channel }}</button>
     <button type="button" class="btn btn-danger col-lg-2" (click)="deleteChannel(channel.channel)" *ngIf="group.role >= 1">-</button>
   </div>
 

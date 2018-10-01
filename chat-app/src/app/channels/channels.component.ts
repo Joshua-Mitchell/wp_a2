@@ -11,7 +11,7 @@ export class ChannelsComponent implements OnInit {
   @Input() group;
   @Output() channelChanged: EventEmitter<string> = new EventEmitter();
   @Output() deletedChannel: EventEmitter<string> = new EventEmitter();
-  
+
   constructor() { }
 
   ngOnInit() {
