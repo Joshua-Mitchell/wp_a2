@@ -418,41 +418,46 @@ app.delete('/api/channel/delete/:channelName/:groupName/:id', function(req, res)
 });
 
 app.post('/api/channel/create', function(req, res){
-    let newchannelName = req.body.newChannelName;
+    let newChannelName = req.body.newChannelName;
     let selectedGroup = req.body.selectedGroup;
     let id = req.body._id;
     let member = req.body.member;
-    if(channelName === '' || channelName === 'undefined' || channelName == null){
-        res.send(false);
-    } else {
-        let newChannel = {
-            'channel': newChannelName,
-            'messages' : []
-        };
+     
+    MongoClient.connect(url, function(err, client) {
+        if (err) throw err;
+        let db = client.db(dbName);
+        if(newChannelName === '' || newChannelName === 'undefined' || newChannelName == null){
+            res.send(false);
+        } else {
+            let newChannel = {
+                'channel': newChannelName,
+                'messages' : []
+            };
 
-        db.collection('users').updateMany({"adminOf.group":selectedGroup}, {$addToSet : {"adminOf.$.channels" :  newChannel}}, function(err, createChannel) {
-            if (err) throw err;
-            console.log(createChannel.result);
-            if (createChannel.result.nModified >= 1) {
-                console.log('number of channels modified ' + createChannel.result.nModified);
-                
-                db.collection("users").findOne({"_id" : id}, function(err, data) { 
-                    if (err) throw err;
-                    res.send(data);
+            db.collection('users').updateMany({"adminOf.group":selectedGroup}, {$addToSet : {"adminOf.$.channels" :  newChannel}}, function(err, createChannel) {
+                if (err) throw err;
+                console.log(createChannel.result);
+                if (createChannel.result.nModified >= 1) {
+                    console.log('number of channels modified ' + createChannel.result.nModified);
+                    
+                    db.collection("users").findOne({"_id" : id}, function(err, data) { 
+                        if (err) throw err;
+                        res.send(data);
+                        //client.close();
+                    });
+
+                }
+                else {
+                    console.log('matches : ' + channelDelete.result.n);
+                    console.log('no matches for channel or group');
+
+                    res.send(false);
                     //client.close();
-                });
-
-            }
-            else {
-                console.log('matches : ' + channelDelete.result.n);
-                console.log('no matches for channel or group');
-
-                res.send(false);
-                //client.close();
-            }
-        });
-        
-    }
+                }
+            });
+            
+        }
+    });
 });
 
 app.post('/api/channels', function(req,res){
