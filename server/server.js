@@ -323,10 +323,18 @@ app.delete('/api/group/delete/:groupname/:id', function(req, res){
             }
         });
 
-
-
+        db.collection("users").updateMany({}, {$pull : {"adminOf" : {"group" : groupName}}}, function(err, groupDelete) {
+            if (err) throw err;
+            
+            // Check if the group was successfully removed
+            if (groupDelete.result.nModified >= 1) {
+                console.log('number of other groups deleted ');
+                console.log(groupDelete.result.nModified);
+            }
+            
                     
             //client.close();
+        });
 
     });
 });
