@@ -342,6 +342,7 @@ app.post('/api/group/create', function(req, res){
                 'channels':[]
             };
             // Add the new group to the user list of groups
+            // TODO - add all groups to super user with role 2
             db.collection('users').updateOne({"_id" : req.body._id}, {$addToSet : {"adminOf" : newGroup}}, function(err, result) {
                 if (err) throw err;
                 console.log(result.result);
@@ -370,9 +371,40 @@ app.post('/api/group/create', function(req, res){
 });
 
 app.delete('/api/channel/delete/:channelName/:groupName/:id', function(req, res) {
-    let channelName = req.body.channelName;
-    let groupName = req.body.groupName;
+    let channelName = req.params.channelName;
+    let groupName = req.params.groupName;
+    let id = req.params.id;
+    console.log("group " + groupName + " channel " + channelName + "_id" + id);
     
+    MongoClient.connect(url, function(err, client) {
+        if (err) throw err;
+        let db = client.db(dbName);
+
+        // { "adminOf.group":"1701"}, {$pull : {"adminOf.0.channels" : {"channel" : "Lab2"}}})
+        db.collection('users').updateOne({"adminOf.group": groupName}, {$pull : {"adminOf.0.channels" : {"channel": channelName}}}, function(err, channelDelete) {
+        db.collection('users')
+            if (err) throw err;
+            console.log(channelDelete.result);
+            if (channelDelete.result.nModified >= 1) {
+                console.log('number of channels modified ' + channelDelete.result.nModified);
+                
+                db.collection("users").findOne({"_id" : id}, function(err, data) { 
+                    if (err) throw err;
+                    res.send(data);
+                    //client.close();
+                });
+
+            }
+            else {
+                console.log('matches : ' + channelDelete.result.n);
+                console.log('no matches for channel or group');
+
+                res.send(false);
+                //client.close();
+            }
+        });
+    });
+
 });
 
 app.post('/api/channel/create', function(req, res){

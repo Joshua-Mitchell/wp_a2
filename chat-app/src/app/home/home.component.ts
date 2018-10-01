@@ -216,12 +216,10 @@ export class HomeComponent implements OnInit {
             console.log(this.groups);
             this.selectedGroup = this.groups[0];
             this.channels = this.selectedGroup.channels;
-          } else {
-            console.log('there are no groups remaining\n');
           }
 
         } else {
-          console.log('group was not deleted\n');
+          console.log('channel was not deleted\n');
         }
 
       }, error => {
