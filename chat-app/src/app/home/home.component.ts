@@ -45,17 +45,19 @@ export class HomeComponent implements OnInit {
 
   createChannel(event) {
     event.preventDefault();
-
+    console.log('new channel name ' + this.newChannelName);
     let data = {
       'newChannelName': this.newChannelName,
-      'selectedGroup': this.selectedGroup.name,
+      'selectedGroup': this.selectedGroup.group,
+      '_id' : this.user._id,
       'member': JSON.parse(sessionStorage.getItem('user')).username
     };
 
     this._groupService.createChannel(data).subscribe(
       data => {
         console.log(data);
-        this.getChannels(this.selectedGroup.name);
+
+        //this.getChannels(this.selectedGroup.name);
       },
       error => {
         console.error(error);
@@ -199,6 +201,7 @@ export class HomeComponent implements OnInit {
     }
     return found;
   }
+
 
   deleteChannelHandler(name) {
     console.log('channel selected to delete: ' + name);
