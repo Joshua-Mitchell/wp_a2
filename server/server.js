@@ -381,8 +381,7 @@ app.delete('/api/channel/delete/:channelName/:groupName/:id', function(req, res)
         let db = client.db(dbName);
 
         // { "adminOf.group":"1701"}, {$pull : {"adminOf.0.channels" : {"channel" : "Lab2"}}})
-        db.collection('users').updateOne({"adminOf.group": groupName}, {$pull : {"adminOf.0.channels" : {"channel": channelName}}}, function(err, channelDelete) {
-        db.collection('users')
+        db.collection('users').updateOne({"adminOf.group": groupName}, {$pull : {"adminOf.$.channels" : {"channel": channelName}}}, function(err, channelDelete) {
             if (err) throw err;
             console.log(channelDelete.result);
             if (channelDelete.result.nModified >= 1) {

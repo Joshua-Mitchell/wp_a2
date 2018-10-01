@@ -214,7 +214,8 @@ export class HomeComponent implements OnInit {
           this.groups = data.adminOf;
           if (this.groups.length > 0) {
             console.log(this.groups);
-            this.selectedGroup = this.groups[0];
+            //this.selectedGroup = this.selectedGroup;
+            this.openGroup(this.selectedGroup.group);
             this.channels = this.selectedGroup.channels;
           }
 
