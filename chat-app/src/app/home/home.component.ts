@@ -202,6 +202,32 @@ export class HomeComponent implements OnInit {
 
   deleteChannelHandler(name) {
     console.log('channel selected to delete: ' + name);
+    this._groupService.deleteChannel(name, this.selectedGroup.group, this.user._id).subscribe(
+      data => {
+        if (data !== false) {
+
+          let temp = JSON.stringify(data);
+          sessionStorage.setItem('user', temp);
+          this.user = data;
+          console.log(data);
+
+          this.groups = data.adminOf;
+          if (this.groups.length > 0) {
+            console.log(this.groups);
+            this.selectedGroup = this.groups[0];
+            this.channels = this.selectedGroup.channels;
+          } else {
+            console.log('there are no groups remaining\n');
+          }
+
+        } else {
+          console.log('group was not deleted\n');
+        }
+
+      }, error => {
+        console.error(error);
+      }
+    );
   }
 
   getChannels(groupName) {

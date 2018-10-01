@@ -277,22 +277,6 @@ app.post('/api/groups', function(req,res){
         client.close();
     });
     
-    //res.send(groupslist);
-
-    // We want to authenticate again -- usually you'd use a token
-    // fs.readFile(dataFile, dataFormat, function(err, data){
-    //     data = JSON.parse(data);
-    //     let username = req.body.username; 
-    //     login.data = data;
-    //     let match = login.findUser(username);
-        
-    //     // Check to see if we got a match, get groups if true
-    //     if(match !== false){
-    //         groups.data = data;
-    //         match.groups = groups.getGroups(username, match.permissions);
-    //     }
-    //     res.send(match);
-    // });
 });
 
 app.delete('/api/group/delete/:groupname/:id', function(req, res){
@@ -383,6 +367,12 @@ app.post('/api/group/create', function(req, res){
         }
         
     });
+});
+
+app.delete('/api/channel/delete/:channelName/:groupName/:id', function(req, res) {
+    let channelName = req.body.channelName;
+    let groupName = req.body.groupName;
+    
 });
 
 app.post('/api/channel/create', function(req, res){

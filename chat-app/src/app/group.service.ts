@@ -43,4 +43,8 @@ export class GroupService {
     return this.http.post(this.api + 'channels', body, httpOptions);
   }
 
+  deleteChannel(channelName, groupName, id) {
+    return this.http.delete(this.api + 'channel/delete/' + channelName + '/' + groupName + '/' + id);
+  }
+
 }
