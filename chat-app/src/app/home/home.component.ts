@@ -55,7 +55,21 @@ export class HomeComponent implements OnInit {
 
     this._groupService.createChannel(data).subscribe(
       data => {
-        console.log(data);
+        if (data !== false) {
+          let temp = JSON.stringify(data);
+          sessionStorage.setItem('user', temp);
+          this.user = data;
+          console.log(data);
+          this.groups = data.adminOf;
+          if (this.groups.length > 0) {
+            console.log(this.groups);
+            //this.selectedGroup = this.selectedGroup;
+            this.openGroup(this.selectedGroup.group);
+            this.channels = this.selectedGroup.channels;
+          }
+        } else {
+          console.log('channel was not created');
+        }
 
         //this.getChannels(this.selectedGroup.name);
       },

@@ -341,8 +341,10 @@ app.post('/api/group/create', function(req, res){
                 'role': 1,
                 'channels':[]
             };
+            
             // Add the new group to the user list of groups
             // TODO - add all groups to super user with role 2
+            
             db.collection('users').updateOne({"_id" : req.body._id}, {$addToSet : {"adminOf" : newGroup}}, function(err, result) {
                 if (err) throw err;
                 console.log(result.result);
@@ -365,6 +367,15 @@ app.post('/api/group/create', function(req, res){
                 
             });
             
+            // let newGroup = {
+            //     'group': req.body.newGroupName,
+            //     'role': 2,
+            //     'channels':[]
+            // };
+            // db.collection('users').updateOne({'username' : 'super'}, {$addToSet : {"adminOf" : newGroup}}, function(err, result) {
+            //     if (err) throw err;
+            // });
+            
         }
         
     });
@@ -381,7 +392,7 @@ app.delete('/api/channel/delete/:channelName/:groupName/:id', function(req, res)
         let db = client.db(dbName);
 
         // { "adminOf.group":"1701"}, {$pull : {"adminOf.0.channels" : {"channel" : "Lab2"}}})
-        db.collection('users').updateOne({"adminOf.group": groupName}, {$pull : {"adminOf.$.channels" : {"channel": channelName}}}, function(err, channelDelete) {
+        db.collection('users').updateMany({"adminOf.group": groupName}, {$pull : {"adminOf.$.channels" : {"channel": channelName}}}, function(err, channelDelete) {
             if (err) throw err;
             console.log(channelDelete.result);
             if (channelDelete.result.nModified >= 1) {
@@ -407,33 +418,40 @@ app.delete('/api/channel/delete/:channelName/:groupName/:id', function(req, res)
 });
 
 app.post('/api/channel/create', function(req, res){
-    let channelName = req.body.newChannelName;
+    let newchannelName = req.body.newChannelName;
     let selectedGroup = req.body.selectedGroup;
+    let id = req.body._id;
     let member = req.body.member;
     if(channelName === '' || channelName === 'undefined' || channelName == null){
         res.send(false);
     } else {
-        // Read the JSON file to get an updated list of groups
-        fs.readFile(dataFile, dataFormat, function(err, data){
-            let readData = JSON.parse(data);
-            let c = readData.channels;
-    
-            let newChannel = {
-                'name': req.body.newChannelName,
-                'group': selectedGroup,
-                'members':[]
-            };
-            console.log(newChannel);
-            c.push(newChannel);
-            readData.channels = c;
-            let json = JSON.stringify(readData);
-            
-            // Write the updated data to the JSON file.
-            fs.writeFile(dataFile, json, dataFormat, function(err, data){
-                res.send(true);
-                console.log("Created new channel: " + req.body.newChannelName);
-            });
+        let newChannel = {
+            'channel': newChannelName,
+            'messages' : []
+        };
+
+        db.collection('users').updateMany({"adminOf.group":selectedGroup}, {$addToSet : {"adminOf.$.channels" :  newChannel}}, function(err, createChannel) {
+            if (err) throw err;
+            console.log(createChannel.result);
+            if (createChannel.result.nModified >= 1) {
+                console.log('number of channels modified ' + createChannel.result.nModified);
+                
+                db.collection("users").findOne({"_id" : id}, function(err, data) { 
+                    if (err) throw err;
+                    res.send(data);
+                    //client.close();
+                });
+
+            }
+            else {
+                console.log('matches : ' + channelDelete.result.n);
+                console.log('no matches for channel or group');
+
+                res.send(false);
+                //client.close();
+            }
         });
+        
     }
 });
 
