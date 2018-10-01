@@ -47,11 +47,11 @@
             </div>
 
             <!-- List of Groups -->
-            <div class="row" *ngFor="let group of groups">
-                <button type="button" *ngIf="group.role == 0" (click)="openGroup(group.name)" class="btn btn-outline-success col-lg-12">{{ group.name }}</button>
-                <button type="button" *ngIf="group.role >= 1" (click)="openGroup(group.name)" class="btn btn-outline-primary col-lg-10">{{ group.name }}</button>
-                <button type="button" class="btn btn-danger col-lg-2" (click)="deleteGroup(group.name)" *ngIf="group.role >= 1">-</button>
-            </div>
+            <div class="row" *ngFor="let group of user.adminOf">
+                <button type="button" *ngIf="group.role == 0" (click)="openGroup(group.group)" class="btn btn-outline-success col-lg-12">{{ group.group }}</button> <!--*ngIf="group.role == 0"-->
+                <button type="button" *ngIf="group.role >= 1" (click)="openGroup(group.group)" class="btn btn-outline-primary col-lg-10">{{ group.group }}</button>  <!--*ngIf="group.role >= 1"-->
+                <button type="button" class="btn btn-danger col-lg-2" (click)="deleteGroup(group.group)" *ngIf="group.role >= 1">-</button>
+             </div>
           </div>
         </div>
       </div>
@@ -72,6 +72,7 @@
 
             <!-- List of Channels -->
             <app-channels [channels]=channels [group]=selectedGroup (channelChanged)="channelChangedHandler($event)"></app-channels>
+
           </div>
         </div>
       </div>

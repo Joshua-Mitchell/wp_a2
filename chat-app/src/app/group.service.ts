@@ -24,10 +24,10 @@ export class GroupService {
     return this.http.post(this.api + 'group/create', body, httpOptions);
   }
 
-  deleteGroup(groupName, username) {
-    return this.http.delete(this.api + 'group/delete/' + groupName);
+  deleteGroup(groupName, id) {
+    return this.http.delete(this.api + 'group/delete/' + groupName + '/' + id);
   }
-  
+
   getGroups(data) {
     let body = JSON.stringify(data);
     return this.http.post(this.api + 'groups', body, httpOptions);

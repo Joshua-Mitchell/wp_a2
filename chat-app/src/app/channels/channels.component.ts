@@ -10,7 +10,8 @@ export class ChannelsComponent implements OnInit {
   @Input() channels;
   @Input() group;
   @Output() channelChanged: EventEmitter<string> = new EventEmitter();
-
+  @Output() deletedChannel: EventEmitter<string> = new EventEmitter();
+  
   constructor() { }
 
   ngOnInit() {
@@ -19,6 +20,9 @@ export class ChannelsComponent implements OnInit {
   changeChannel(name) {
     // console.log("changeChannel("+name+")");
     this.channelChanged.emit(name);
+  }
+  deleteChannel(name) {
+    this.deletedChannel.emit(name);
   }
 
 }

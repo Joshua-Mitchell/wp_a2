@@ -21,6 +21,8 @@ app.use(cors(corsOptions));
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
+let ObjectID = require('mongodb').ObjectID;
+
 const url = 'mongodb://localhost:27017';
 
 const dbName = 'chatDB';
@@ -33,7 +35,7 @@ MongoClient.connect(url, function(err, client) {
     console.log("Connected successfully to server");
 
     
-
+    
     
     
     const db = client.db(dbName);
@@ -61,6 +63,47 @@ MongoClient.connect(url, function(err, client) {
         {name:"Events",group:"Griffith Innovate",members:["ryoma","member1","group"]},
         {name:"Admin Chat",group:"Griffith Innovate",members:["ryoma"]}
     ];
+
+
+    let superUser = {
+        _id : "egergrsg",
+        username : "super",
+        password : "123",
+        adminOf: [
+            {group: "1701", role:0, channels: [
+                {channel: "Lab"},
+                {channel: "Lab2"},
+                {channel: "lab3"}
+            ]},
+            {group: "1803", role:1, channels: [
+                {channel: "Lab1"},
+                {channel: "Lab2"}
+            ]},
+            {group: "1801", role:1, channels: [
+                {channel: "Lab1"},
+                {channel: "Lab"}
+            ]}
+        ],
+        memberOf: [
+            {}
+        ]
+
+    }
+
+    let groupAdmin1 = {
+        _id : "ssrgdrtg",
+        username: "josh",
+        password: "123",
+        adminOf : [
+            {group: "1801", role: 1, channels: [
+                {channel: "Lab1"},
+                {channel: "Lab2"}
+            ]}
+        ],
+        memberOf : [
+            {}
+        ]
+    }
 
     db.collection("users").drop(function(err, delOk) {
         if(err) {
@@ -115,12 +158,12 @@ MongoClient.connect(url, function(err, client) {
 
     });
 
-    db.collection("users").insertMany(usersInit, function(err, res){
+    db.collection("users").insertOne(superUser, function(err, res){
         if (err) throw err;
         console.log("Inserted " + res.insertedCount + " documents to students");
     });
 
-    db.collection("groups").insertMany(groupsInit, function(err, res) {
+    db.collection("users").insertOne(groupAdmin1, function(err, res) {
         if (err) throw err;
         console.log("Inserted " + res.insertedCount + " documents to groups");
     });
@@ -175,96 +218,123 @@ app.post('/api/login', function(req, res){
             let obj = {
                 "success": false
             }
-            //console.log(data);
-            if(data.password === req.body.password){
-                obj.success = true;
-                obj.user = data;
-                db.collection("groups").find({"members":req.body.username}).toArray(function(err, groupsData){
-                    console.log("groups1: " + groupsData);
-                });
-                //console.log();
-                //getGroups(username, res, dbo)
-                console.log("User Id: "+ data._id);
-                obj.groups = groups.GetGroups(data.username, res, db);
-                console.log("Groups: " + obj.groups);
-                console.log("Password correct");
+            console.log("Data \n");
+            console.log(data);
+            if (data === null) {
+                let obj = false;
+                res.send(obj);
                 
-            } 
-            res.send(obj);
+            } else{
+                if(data.password === req.body.password){
+                    obj.success = true;
+
+                    //obj.groups = 
+                    // db.collection("users").find({"adminOf" : {$all : []}}).toArray(function(err, groupsData){
+                    //     if (err) throw err;
+                    //     console.log("groups1: " + groupsData);
+                    // });
+
+                    //console.log();
+                    //getGroups(username, res, dbo)
+                    console.log("User : "+ data._id + 'logged in.');
+
+                    
+                    //console.log("group returned\n" + obj.groups);
+                    console.log("Password correct");
+                    
+                } 
+                res.send(data);
+            }
+            
             
 
             
-            console.log(data);
+            
             client.close();
         });
-        // console.log("Monogo Username: " + username);
-
-        // if (db.collection.findOne(req.body.password)) {
-        //     console.log("Password is correct");
-        // }
-
-        //client.close();
 
     });
-    // fs.readFile(dataFile, dataFormat, function(err, data) {
-    //     console.log("DATA " + data);
-    //     data = JSON.parse(data);
-    //     let username = req.body.username;
-    //     let password = req.body.password;
-    //     login.data = data;
 
-    //     // check the json file to see if the username exists
-    //     let match = login.findUser(username, password, MongoClient);
+});
 
+// Group APIs
+app.post('/api/groups', function(req,res){
+    console.log('api groups called\n');
+    let groupsList= [];
+    MongoClient.connect(url, function(err, client) {
+        if (err) throw err;
+        let db = client.db(dbName);
+        let ObjectID = require('mongodb').ObjectID;
+        groupsList = groups.getGroups(req.body.username, res, db);
+        console.log('groups request from db\n');
+        console.log(groupsList);
+        client.close();
+    });
     
-    //     // Check to see if we have a match, get groups if true
-    //     if(match !== false) {
+    //res.send(groupslist);
 
+    // We want to authenticate again -- usually you'd use a token
+    // fs.readFile(dataFile, dataFormat, function(err, data){
+    //     data = JSON.parse(data);
+    //     let username = req.body.username; 
+    //     login.data = data;
+    //     let match = login.findUser(username);
+        
+    //     // Check to see if we got a match, get groups if true
+    //     if(match !== false){
     //         groups.data = data;
     //         match.groups = groups.getGroups(username, match.permissions);
-
     //     }
-    //     console.log(match.groups[0].channels[0]);
     //     res.send(match);
     // });
 });
 
-
-// Group APIs
-app.post('/api/groups', function(req,res){
-    // We want to authenticate again -- usually you'd use a token
-    fs.readFile(dataFile, dataFormat, function(err, data){
-        data = JSON.parse(data);
-        let username = req.body.username; 
-        login.data = data;
-        let match = login.findUser(username);
-        
-        // Check to see if we got a match, get groups if true
-        if(match !== false){
-            groups.data = data;
-            match.groups = groups.getGroups(username, match.permissions);
-        }
-        res.send(match);
-    });
-});
-
-app.delete('/api/group/delete/:groupname', function(req, res){
+app.delete('/api/group/delete/:groupname/:id', function(req, res){
     let groupName = req.params.groupname;
+    console.log('Called groups delete api\n');
+    MongoClient.connect(url, function(err, client) {
+        if (err) throw err;
+        let db = client.db(dbName);
+        let ObjectID = require('mongodb').ObjectID;
+        db.collection("users").findOne({"_id" : req.params.id}, function(err, data) { 
+            if (err) throw err;
+            if (data === null) {
+                console.log("\nCould find user to delete group\n");
+            } else {
+                db.collection("users").updateOne({"_id" : req.params.id}, {$pull : {"adminOf" : {"group" : groupName}}}, function(err, groupDelete) {
+                    if (err) throw err;
+                    
+                    if (groupDelete.result.nModified === 1) {
+                        res.send(data);
+                    } else {
+                        res.send(false);
+                    }
+                    console.log("Getting group data after delete\n");
+                    console.log(groupDelete.result);
+                });
+                    
+            }
+            console.log("User found\n");
+            console.log(data); 
+            client.close();
+        });
+
+    });
 
     // Read the JSON file to get the current data
-    fs.readFile(dataFile, dataFormat, function(err, data){
-        let readData = JSON.parse(data);
-        groups.data = readData.groups;
-        readData.groups = groups.deleteGroup(groupName);
-        console.log(readData);
-        let json = JSON.stringify(readData);
+    // fs.readFile(dataFile, dataFormat, function(err, data){
+    //     let readData = JSON.parse(data);
+    //     groups.data = readData.groups;
+    //     readData.groups = groups.deleteGroup(groupName);
+    //     console.log(readData);
+    //     let json = JSON.stringify(readData);
 
-        // Write the updated data to JSON
-        fs.writeFile(dataFile, json, dataFormat, function(err, d){
-            res.send(true);
-            console.log("Deleted group: " + groupName);
-        });
-    });
+    //     // Write the updated data to JSON
+    //     fs.writeFile(dataFile, json, dataFormat, function(err, d){
+    //         res.send(true);
+    //         console.log("Deleted group: " + groupName);
+    //     });
+    // });
 });
 
 app.post('/api/group/create', function(req, res){
