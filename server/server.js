@@ -37,32 +37,7 @@ MongoClient.connect(url, function(err, client) {
     console.log("Connected successfully to server");
 
     const db = client.db(dbName);
-    let usersInit = [
-        // users:[
-            {username:"Josh", permissions:2, password:"123"},
-            {username:"super", permissions:2, password:"123"},
-            {username:"group", permission:1, password:"123"},
-            {username:"ryoma", permissions:2, password:"123"}
-        // groups:[
-        //     {name:"2811ICT",admins:["super"],members:["member1","ryoma"]},
-        //     {name:"1701ICT",admins:["group"],members:["member2"]}
-        // ],
-        // channels:[
-        //     {name:"Events",group:"Griffith Innovate",members:["ryoma","member1","group"]},
-        //     {name:"Admin Chat",group:"Griffith Innovate",members:["ryoma"]}
-        // ]
-        
-    ];
-    let groupsInit = [
-        {name:"2811ICT",admins:["super"],members:["ryoma", "member1"]},
-        {name:"1701ICT",admins:["group"],members:["member2"]}
-    ];
-    let channelInit = [
-        {name:"Events",group:"Griffith Innovate",members:["ryoma","member1","group"]},
-        {name:"Admin Chat",group:"Griffith Innovate",members:["ryoma"]}
-    ];
-
-
+    
     let superUser = {
         _id : "egergrsg",
         username : "super",
@@ -487,8 +462,4 @@ app.post('/api/channels', function(req,res){
  
 
 
-// HTTP Listener
-// app.listen(3000, function(){
-//     console.log('Server running');
-// })
 module.exports = app;

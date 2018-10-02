@@ -25,7 +25,7 @@ module.exports = function(io) {
 
         socket.on('message', function(data) {
             let room = data.selectedGroup + '-' +  data.selectedChannel
-            console.log("borad message");
+            
             console.log(data);
             io.in(room).emit('receive message', {user:data.username, message:data.message});
         })
