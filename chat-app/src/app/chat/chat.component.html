@@ -1,11 +1,13 @@
 
 <div class="card mb-3">
-  <h3 *ngIf="channel != null" class="card-header">{{channel.channel}}</h3>
+  <h3 *ngIf="channel != null" class="card-header">{{group.group}} - {{channel.channel}}</h3>
   <h3 *ngIf="channel == null" class="card-header">Chat</h3>
   <div class="card-body" style="height: 500px; overflow-y:scroll">
-    <p class="card-text" *ngFor="let message of channel.messages">
-      {{message}}
-    </p>
+    <div class="card-text" *ngFor="let message of messageArray">
+      <span><strong>{{message.user}} : </strong>{{message.message}}</span>
+      
+    </div>
+
 
   </div>
   <div class="card-footer text-muted">

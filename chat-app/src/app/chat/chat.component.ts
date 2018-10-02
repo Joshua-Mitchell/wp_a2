@@ -8,6 +8,8 @@ import { UserService } from '../user.service';
 })
 export class ChatComponent implements OnInit {
   @Input() channel;
+  @Input() group;
+  @Input() messageArray: any[];
 
   @Output() sendMessage: EventEmitter<string> = new EventEmitter();
   public message: string;
@@ -15,9 +17,11 @@ export class ChatComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
   enteredMessage(message) {
+    console.log(this.messageArray);
     this.sendMessage.emit(message);
   }
 

@@ -19,7 +19,15 @@ export class HomeComponent implements OnInit {
   public newGroupName: String;
   public newChannelName: String;
 
-  constructor(private router: Router, private _groupService: GroupService, private _chatService: ChatService) { }
+  public messageArray: Array<{user: String, message: String}> = [{user:"super", message:"hello"}];
+  constructor(private router: Router, private _groupService: GroupService, private _chatService: ChatService) {
+    this._chatService.newUserJoined().subscribe(data => {
+      console.log('new user joined');
+      console.log(data);
+      this.messageArray.push(data);
+    });
+
+  }
 
   ngOnInit() {
     if (sessionStorage.getItem('user') === null) {
@@ -49,14 +57,14 @@ export class HomeComponent implements OnInit {
   createChannel(event) {
     event.preventDefault();
     console.log('new channel name ' + this.newChannelName);
-    let data = {
+    let createChannelData = {
       'newChannelName': this.newChannelName,
       'selectedGroup': this.selectedGroup.group,
       '_id' : this.user._id,
       'member': JSON.parse(sessionStorage.getItem('user')).username
     };
 
-    this._groupService.createChannel(data).subscribe(
+    this._groupService.createChannel(createChannelData).subscribe(
       data => {
         if (data !== false) {
           let temp = JSON.stringify(data);
@@ -202,6 +210,7 @@ export class HomeComponent implements OnInit {
       }
     }
     this.channels = this.selectedGroup.channels;
+    this.selectedChannel = this.selectedGroup.channels[0];
 
     console.log("Channels of Selected Group\n");
     console.log(this.channels);
@@ -220,6 +229,7 @@ export class HomeComponent implements OnInit {
         console.log(this.channels[i].channel);
         this.selectedChannel = this.channels[i];
         found = true;
+        this.joinChannel();
       }
     }
     return found;
@@ -275,6 +285,12 @@ export class HomeComponent implements OnInit {
 
     //return channels;
   }
+  joinChannel() {
+    //console.log('join channel called');
+    this._chatService.joinChannel({username: this.user.username, selectedChannel: this.selectedChannel.channel, selectedGroup: this.selectedGroup.group});
+  }
+
+
   enteredMessage(message) {
     console.log('message entered ' + message);
     let messageObj = {
@@ -282,23 +298,23 @@ export class HomeComponent implements OnInit {
       '_id' : this.user._id,
       'groupName' : this.selectedGroup.group
     };
-    this._chatService.addMessage(messageObj).subscribe(
-      data => {
-        if (data !== false ) {
-          let temp = JSON.stringify(data);
-          sessionStorage.setItem('user', temp);
-          this.user = data;
-          console.log(data);
+    // this._chatService.addMessage(messageObj).subscribe(
+    //   data => {
+    //     if (data !== false ) {
+    //       let temp = JSON.stringify(data);
+    //       sessionStorage.setItem('user', temp);
+    //       this.user = data;
+    //       console.log(data);
 
-          this.groups = data.adminOf;
-          if (this.groups.length > 0) {
-            console.log(this.groups);
-            //this.selectedGroup = this.selectedGroup;
-            this.openGroup(this.selectedGroup.group);
-            this.channels = this.selectedGroup.channels;
-          }
-        }
-      }
-    )
+    //       this.groups = data.adminOf;
+    //       if (this.groups.length > 0) {
+    //         console.log(this.groups);
+    //         //this.selectedGroup = this.selectedGroup;
+    //         this.openGroup(this.selectedGroup.group);
+    //         this.channels = this.selectedGroup.channels;
+    //       }
+    //     }
+    //   }
+    // )
   }
 }

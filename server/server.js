@@ -220,6 +220,7 @@ app.get('/home', function(req,res){
 // Login Module
 const login = require('./login.js')();
 const groups = require('./groups.js')();
+const socket = require('./sockets')(io);
 
 
 app.post('/api/login', function(req, res){
