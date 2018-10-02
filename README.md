@@ -20,6 +20,10 @@ My approach to version control to push a commit to the repository once I've comp
 ## Angular Architecture
 The chat-app contains 4 components and 2 services. 
 A login component displays the login page and is the default, first page to be displayed to the user. It consists of username and password input with a login button. If the users credentials are found in the mongo database and are correct, the users information will be retrieved from the database and stored in session storage. The user is then navigated to the home component page.
+The home component contains the majority of the web site functionality. Here the list of groups, channels and users are displayed. And they can all be edited, deleted (if user has access) and created. The chat component is also displayed here. The user can enter messages to broadcast to all other members.
+
+The group service handles all post, get and delete route calls for groups and channels.
+The user service handles the login routes and sets the intial user detail in session storage when they log in.
 
 The project contains 2 components, a login component and a chat component. The login routes to the chat component when the user enters their username. The chat component contains all of the other features, including the text message area and the side navigation bar with the list of channels and groups. 
 A group service is used to return a list of all groups that are available
