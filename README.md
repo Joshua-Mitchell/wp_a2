@@ -57,5 +57,3 @@ The home component contains the majority of the web site functionality. Here the
 The group service handles all post, get and delete route calls for groups and channels.
 The user service handles the login routes and sets the intial user detail in session storage when they log in.
 
-The project contains 2 components, a login component and a chat component. The login routes to the chat component when the user enters their username. The chat component contains all of the other features, including the text message area and the side navigation bar with the list of channels and groups. 
-A group service is used to return a list of all groups that are available
