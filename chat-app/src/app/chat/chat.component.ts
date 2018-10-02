@@ -20,9 +20,9 @@ export class ChatComponent implements OnInit {
 
   }
 
-  enteredMessage(message) {
+  enteredMessage() {
     console.log(this.messageArray);
-    this.sendMessage.emit(message);
+    this.sendMessage.emit(this.message);
   }
 
 }

@@ -17,7 +17,21 @@ export class ChatService {
 
   newUserJoined() {
     let observable = new Observable<{user: String, message: String}> (observer => {
-      this.socket.on('new user joined', (data) => {
+      this.socket.on('newUser', (data) => {
+        observer.next(data);
+      });
+      return () => {this.socket.disconnect(); };
+    });
+    return observable;
+  }
+
+  leaveRoom(data) {
+    this.socket.emit('leave', data);
+  }
+
+  userLeftRoom() {
+    let observable = new Observable<{user: String, message: String}> (observer => {
+      this.socket.on('leave Room', (data) => {
         observer.next(data);
       });
       return () => {this.socket.disconnect(); };
@@ -26,9 +40,19 @@ export class ChatService {
   }
 
 
-  addMessage(message) {
-    let body = JSON.stringify(message);
-    // return this.http.post(this.api);
+  sendMessage(message) {
+    console.log('message sending');
+    console.log(message);
+    this.socket.emit('message', message);
+  }
+  newMessageReceived() {
+    let observable = new Observable<{user: String, message: String}> (observer => {
+      this.socket.on('receive message', (data) => {
+        observer.next(data);
+      });
+      return () => {this.socket.disconnect(); };
+    });
+    return observable;
   }
 
 }

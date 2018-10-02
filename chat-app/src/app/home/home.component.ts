@@ -19,13 +19,23 @@ export class HomeComponent implements OnInit {
   public newGroupName: String;
   public newChannelName: String;
 
-  public messageArray: Array<{user: String, message: String}> = [{user:"super", message:"hello"}];
+  messageArray: Array<{user: String, message: String}> = [{user:"super", message:"hello"}, {user:"super", message:"hello again"}];
   constructor(private router: Router, private _groupService: GroupService, private _chatService: ChatService) {
+
     this._chatService.newUserJoined().subscribe(data => {
       console.log('new user joined');
       console.log(data);
       this.messageArray.push(data);
     });
+
+    this._chatService.newMessageReceived().subscribe(data => {
+      console.log('new message');
+      console.log(data);
+      this.messageArray.push(data);
+
+
+    });
+
 
   }
 
@@ -298,6 +308,8 @@ export class HomeComponent implements OnInit {
       '_id' : this.user._id,
       'groupName' : this.selectedGroup.group
     };
+    this._chatService.sendMessage({username: this.user.username, selectedChannel: this.selectedChannel.channel, selectedGroup: this.selectedGroup.group, message:message});
+
     // this._chatService.addMessage(messageObj).subscribe(
     //   data => {
     //     if (data !== false ) {

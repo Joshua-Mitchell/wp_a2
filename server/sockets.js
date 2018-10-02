@@ -7,13 +7,27 @@ module.exports = function(io) {
         });
 
         socket.on('join', function(data) {
-
-            socket.join(data.selectedChannel);
             let room = data.selectedGroup + '-' +  data.selectedChannel 
-            console.log(room);
-            console.log(data.username + ' joined the room ' + room);
-            socket.broadcast.to(room).emit('new user joined', {user:data.username, message:'has joined this channel'});
+            socket.join(room);
+            
+            console.log(data.username + ' joined the room : ' + room);
+            socket.broadcast.to(room).emit('newUser', {user:data.username, message:'has joined this channel'});
 
         });
+        socket.on('leave', function(data) {
+            let room = data.selectedGroup + '-' +  data.selectedChannel 
+            
+            console.log(data.username + ' left the room : ' + room);
+
+            socket.broadcast.to(room).emit('leave Room', {user:data.username, message:'has left this channel'});
+            socket.leave(room);
+        });
+
+        socket.on('message', function(data) {
+            let room = data.selectedGroup + '-' +  data.selectedChannel
+            console.log("borad message");
+            console.log(data);
+            io.in(room).emit('receive message', {user:data.username, message:data.message});
+        })
     })
 }
