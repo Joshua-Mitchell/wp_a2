@@ -41,11 +41,13 @@ export class ChatService {
 
 
   sendMessage(message) {
+    // sends messages to all joined users
     console.log('message sending');
     console.log(message);
     this.socket.emit('message', message);
   }
   newMessageReceived() {
+    // waits for message to be receieved from users
     let observable = new Observable<{user: String, message: String}> (observer => {
       this.socket.on('receive message', (data) => {
         observer.next(data);

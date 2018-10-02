@@ -7,6 +7,7 @@ module.exports = function(io) {
         });
 
         socket.on('join', function(data) {
+            // handles user joining channel
             let room = data.selectedGroup + '-' +  data.selectedChannel 
             socket.join(room);
             
@@ -15,6 +16,7 @@ module.exports = function(io) {
 
         });
         socket.on('leave', function(data) {
+            // Handles user leaving channel
             let room = data.selectedGroup + '-' +  data.selectedChannel 
             
             console.log(data.username + ' left the room : ' + room);
@@ -24,6 +26,7 @@ module.exports = function(io) {
         });
 
         socket.on('message', function(data) {
+            // handles sending new messages to all joined users
             let room = data.selectedGroup + '-' +  data.selectedChannel
             
             console.log(data);

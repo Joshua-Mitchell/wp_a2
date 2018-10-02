@@ -345,14 +345,6 @@ app.post('/api/group/create', function(req, res){
                 
             });
             
-            // let newGroup = {
-            //     'group': req.body.newGroupName,
-            //     'role': 2,
-            //     'channels':[]
-            // };
-            // db.collection('users').updateOne({'username' : 'super'}, {$addToSet : {"adminOf" : newGroup}}, function(err, result) {
-            //     if (err) throw err;
-            // });
             
         }
         
@@ -376,6 +368,7 @@ app.delete('/api/channel/delete/:channelName/:groupName/:id', function(req, res)
             if (channelDelete.result.nModified >= 1) {
                 console.log('number of channels modified ' + channelDelete.result.nModified);
                 
+                // Get update user object
                 db.collection("users").findOne({"_id" : id}, function(err, data) { 
                     if (err) throw err;
                     res.send(data);
@@ -411,13 +404,14 @@ app.post('/api/channel/create', function(req, res){
                 'channel': newChannelName,
                 'messages' : []
             };
-
+            // add the new channel to the channel array at the $ position
             db.collection('users').updateMany({"adminOf.group":selectedGroup}, {$addToSet : {"adminOf.$.channels" :  newChannel}}, function(err, createChannel) {
                 if (err) throw err;
                 console.log(createChannel.result);
                 if (createChannel.result.nModified >= 1) {
                     console.log('number of channels modified ' + createChannel.result.nModified);
                     
+                    // get the updated user object
                     db.collection("users").findOne({"_id" : id}, function(err, data) { 
                         if (err) throw err;
                         res.send(data);

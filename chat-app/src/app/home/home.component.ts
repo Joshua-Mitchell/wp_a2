@@ -77,6 +77,8 @@ export class HomeComponent implements OnInit {
     this._groupService.createChannel(createChannelData).subscribe(
       data => {
         if (data !== false) {
+
+        // update the user stored in sessionstorage
           let temp = JSON.stringify(data);
           sessionStorage.setItem('user', temp);
           this.user = data;
@@ -108,6 +110,7 @@ export class HomeComponent implements OnInit {
       data => {
         if (data !== false) {
 
+          // update the user stored in sessionstorage
           let temp = JSON.stringify(data);
           sessionStorage.setItem('user', temp);
           this.user = data;
@@ -140,6 +143,7 @@ export class HomeComponent implements OnInit {
       data => {
         if (data !== false) {
 
+          // update the user stored in sessionstorage
           let temp = JSON.stringify(data);
           sessionStorage.setItem('user', temp);
           this.user = data;
@@ -154,19 +158,6 @@ export class HomeComponent implements OnInit {
             console.log('there are no groups remaining\n');
           }
 
-          // if (this.groups.length > 0) {
-          //   // open the first group and display it's channels
-          //   this.openGroup(this.groups[0].group);
-          //   console.log('first channel \n');
-          //   console.log(this.groups[0].channels[0].channel);
-          //   console.log('channels length ' + this.groups[0].channels.length);
-          //   if (this.groups[0].channels.length > 0) {
-          //     console.log('first channel \n');
-          //     console.log(this.groups[0].channels[0].channel);
-          //     this.channelChangedHandler(this.groups[0].channels[0].channel);
-          //   }
-          // }
-          //this.getGroups();
         } else {
           console.log('group was not deleted\n');
         }
@@ -180,9 +171,6 @@ export class HomeComponent implements OnInit {
 
   getGroups() {
 
-    // let data = {
-    //   'username': JSON.parse(sessionStorage.getItem('user')).username
-    // };
     console.log('get Groups function\n');
     const data = {
       'username' : this.user.username
@@ -212,6 +200,7 @@ export class HomeComponent implements OnInit {
   // Determine which group is currently selected and pass onto the child panel
   openGroup(name) {
     console.log(name);
+    // iterate through all the groups to find it index
     for (let i = 0; i < this.groups.length; i++) {
       if (this.groups[i].group === name) {
         console.log('group ' + i + '\n');
@@ -233,6 +222,7 @@ export class HomeComponent implements OnInit {
     console.log('channel name selected : ' + name);
     let found: boolean = false;
     console.log('Entered channelChangedHandler');
+    // iterate through channels to find it index
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].channel === name) {
         console.log("channel " + i);
@@ -248,10 +238,11 @@ export class HomeComponent implements OnInit {
 
   deleteChannelHandler(name) {
     console.log('channel selected to delete: ' + name);
+    // call api route to delete channel
     this._groupService.deleteChannel(name, this.selectedGroup.group, this.user._id).subscribe(
       data => {
         if (data !== false) {
-
+          // update user object in session storage
           let temp = JSON.stringify(data);
           sessionStorage.setItem('user', temp);
           this.user = data;
@@ -302,6 +293,7 @@ export class HomeComponent implements OnInit {
 
 
   enteredMessage(message) {
+    // calls route to send messages to joined users
     console.log('message entered ' + message);
     let messageObj = {
       'message' : message,
@@ -310,23 +302,6 @@ export class HomeComponent implements OnInit {
     };
     this._chatService.sendMessage({username: this.user.username, selectedChannel: this.selectedChannel.channel, selectedGroup: this.selectedGroup.group, message:message});
 
-    // this._chatService.addMessage(messageObj).subscribe(
-    //   data => {
-    //     if (data !== false ) {
-    //       let temp = JSON.stringify(data);
-    //       sessionStorage.setItem('user', temp);
-    //       this.user = data;
-    //       console.log(data);
 
-    //       this.groups = data.adminOf;
-    //       if (this.groups.length > 0) {
-    //         console.log(this.groups);
-    //         //this.selectedGroup = this.selectedGroup;
-    //         this.openGroup(this.selectedGroup.group);
-    //         this.channels = this.selectedGroup.channels;
-    //       }
-    //     }
-    //   }
-    // )
   }
 }
