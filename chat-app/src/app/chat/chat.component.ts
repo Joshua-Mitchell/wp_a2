@@ -1,4 +1,5 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-chat',
@@ -7,11 +8,17 @@ import { Component, OnInit, Input} from '@angular/core';
 })
 export class ChatComponent implements OnInit {
   @Input() channel;
+
+  @Output() sendMessage: EventEmitter<string> = new EventEmitter();
+  public message: string;
+
   constructor() { }
 
   ngOnInit() {
   }
 
- 
+  enteredMessage(message) {
+    this.sendMessage.emit(message);
+  }
 
 }

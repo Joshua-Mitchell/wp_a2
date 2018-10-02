@@ -6,6 +6,8 @@ const fs = require('fs');
 const dataFile = './data.json';
 const dataFormat = 'utf8';
 const verbose = false;
+const server = app.listen(3000);
+const io = require('socket.io').listen(server);
 
 // CORS
 // We are enabling CORS so that our 'ng serve' Angular server can still access
@@ -485,7 +487,7 @@ app.post('/api/channels', function(req,res){
 
 
 // HTTP Listener
-app.listen(3000, function(){
-    console.log('Server running');
-})
+// app.listen(3000, function(){
+//     console.log('Server running');
+// })
 module.exports = app;

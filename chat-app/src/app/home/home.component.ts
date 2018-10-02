@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { GroupService } from '../group.service';
+import { ChatService } from '../chat.service';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers: [ChatService]
 })
 export class HomeComponent implements OnInit {
   public user;
@@ -16,7 +19,7 @@ export class HomeComponent implements OnInit {
   public newGroupName: String;
   public newChannelName: String;
 
-  constructor(private router: Router, private _groupService: GroupService) { }
+  constructor(private router: Router, private _groupService: GroupService, private _chatService: ChatService) { }
 
   ngOnInit() {
     if (sessionStorage.getItem('user') === null) {
@@ -271,5 +274,31 @@ export class HomeComponent implements OnInit {
     // );
 
     //return channels;
+  }
+  enteredMessage(message) {
+    console.log('message entered ' + message);
+    let messageObj = {
+      'message' : message,
+      '_id' : this.user._id,
+      'groupName' : this.selectedGroup.group
+    };
+    this._chatService.addMessage(messageObj).subscribe(
+      data => {
+        if (data !== false ) {
+          let temp = JSON.stringify(data);
+          sessionStorage.setItem('user', temp);
+          this.user = data;
+          console.log(data);
+
+          this.groups = data.adminOf;
+          if (this.groups.length > 0) {
+            console.log(this.groups);
+            //this.selectedGroup = this.selectedGroup;
+            this.openGroup(this.selectedGroup.group);
+            this.channels = this.selectedGroup.channels;
+          }
+        }
+      }
+    )
   }
 }
