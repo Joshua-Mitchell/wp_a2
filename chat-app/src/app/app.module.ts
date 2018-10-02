@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ChannelsComponent } from './channels/channels.component';
 import { ChatComponent } from './chat/chat.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ChatComponent } from './chat/chat.component';
     LoginComponent,
     HomeComponent,
     ChannelsComponent,
-    ChatComponent
+    ChatComponent,
+    UserSettingsComponent
   ],
   imports: [
     HttpClientModule,

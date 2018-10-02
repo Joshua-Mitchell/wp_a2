@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit {
           }
         } else {
           console.log('channel was not created');
+          alert("The channel was not created.\nThis may be because no channel name was given");
         }
 
         //this.getChannels(this.selectedGroup.name);
@@ -103,6 +104,7 @@ export class HomeComponent implements OnInit {
 
         } else {
           console.log('group ' + this.newGroupName + 'was not created :(\n');
+          alert("The group was not created.\nThis may be because no group name was given");
         }
 
       },
@@ -180,6 +182,10 @@ export class HomeComponent implements OnInit {
   logout() {
     sessionStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  navSettings() {
+    this.router.navigate(['/userSettings']);
   }
 
   // Determine which group is currently selected and pass onto the child panel
